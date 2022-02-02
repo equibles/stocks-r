@@ -19,6 +19,9 @@
 #'
 #' end_of_day Lists the end of day prices for a given stock.
 #'
+#'
+#' intraday Lists the intraday prices for a given stock with one minute precision.
+#'
 #' }
 #'
 #' @export
@@ -35,13 +38,21 @@ PricesApi <- R6::R6Class(
         self$apiClient <- ApiClient$new()
       }
     },
-    end_of_day = function(full_ticker, page, page_size, ...){
+    end_of_day = function(full_ticker, start_time, end_time, page, page_size, ...){
       args <- list(...)
       queryParams <- list()
       headerParams <- character()
 
       if (!missing(`full_ticker`)) {
         queryParams['fullTicker'] <- full_ticker
+      }
+
+      if (!missing(`start_time`)) {
+        queryParams['startTime'] <- start_time
+      }
+
+      if (!missing(`end_time`)) {
+        queryParams['endTime'] <- end_time
       }
 
       if (!missing(`page`)) {
@@ -53,6 +64,50 @@ PricesApi <- R6::R6Class(
       }
 
       urlPath <- "/stocks/prices/endofday"
+      resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
+                                 method = "GET",
+                                 queryParams = queryParams,
+                                 headerParams = headerParams,
+                                 body = body,
+                                 ...)
+      
+      if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
+        returnObject <- PricesResponse$new()
+        result <- returnObject$fromJSON(httr::content(resp, "text", encoding = "UTF-8"))
+        Response$new(returnObject, resp)
+      } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499) {
+        Response$new("API client error", resp)
+      } else if (httr::status_code(resp) >= 500 && httr::status_code(resp) <= 599) {
+        Response$new("API server error", resp)
+      }
+
+    }
+    intraday = function(full_ticker, start_time, end_time, page, page_size, ...){
+      args <- list(...)
+      queryParams <- list()
+      headerParams <- character()
+
+      if (!missing(`full_ticker`)) {
+        queryParams['fullTicker'] <- full_ticker
+      }
+
+      if (!missing(`start_time`)) {
+        queryParams['startTime'] <- start_time
+      }
+
+      if (!missing(`end_time`)) {
+        queryParams['endTime'] <- end_time
+      }
+
+      if (!missing(`page`)) {
+        queryParams['page'] <- page
+      }
+
+      if (!missing(`page_size`)) {
+        queryParams['pageSize'] <- page_size
+      }
+
+      urlPath <- "/stocks/prices/intraday"
       resp <- self$apiClient$callApi(url = paste0(self$apiClient$basePath, urlPath),
                                  method = "GET",
                                  queryParams = queryParams,

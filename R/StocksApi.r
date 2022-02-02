@@ -72,7 +72,7 @@ StocksApi <- R6::R6Class(
                                  ...)
       
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        returnObject <- CommonStocksResponse$new()
+        returnObject <- StockProfilesResponse$new()
         result <- returnObject$fromJSON(httr::content(resp, "text", encoding = "UTF-8"))
         Response$new(returnObject, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499) {
@@ -128,7 +128,7 @@ StocksApi <- R6::R6Class(
                                  ...)
       
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        returnObject <- CommonStockResponse$new()
+        returnObject <- StockProfileResponse$new()
         result <- returnObject$fromJSON(httr::content(resp, "text", encoding = "UTF-8"))
         Response$new(returnObject, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499) {
@@ -166,7 +166,7 @@ StocksApi <- R6::R6Class(
                                  ...)
       
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        returnObject <- CommonStocksResponse$new()
+        returnObject <- StockProfilesResponse$new()
         result <- returnObject$fromJSON(httr::content(resp, "text", encoding = "UTF-8"))
         Response$new(returnObject, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499) {
@@ -202,7 +202,7 @@ StocksApi <- R6::R6Class(
                                  ...)
       
       if (httr::status_code(resp) >= 200 && httr::status_code(resp) <= 299) {
-        returnObject <- CommonStocksResponse$new()
+        returnObject <- StockProfilesResponse$new()
         result <- returnObject$fromJSON(httr::content(resp, "text", encoding = "UTF-8"))
         Response$new(returnObject, resp)
       } else if (httr::status_code(resp) >= 400 && httr::status_code(resp) <= 499) {

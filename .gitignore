@@ -3,7 +3,6 @@
 # History files
 .Rhistory
 .Rapp.history
-.idea/
 
 # Session Data files
 .RData

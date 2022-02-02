@@ -19,6 +19,5 @@ install(".")
 ```
 
 ## Author
-
 [Equibles](https://www.equibles.com)\
 equibles@gmail.com

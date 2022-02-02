@@ -13,7 +13,6 @@
 #' @field low 
 #' @field open 
 #' @field volume 
-#' @field splitFactor 
 #' @field time 
 #'
 #' @importFrom R6 R6Class
@@ -27,9 +26,8 @@ Price <- R6::R6Class(
     `low` = NULL,
     `open` = NULL,
     `volume` = NULL,
-    `splitFactor` = NULL,
     `time` = NULL,
-    initialize = function(`close`, `high`, `low`, `open`, `volume`, `splitFactor`, `time`){
+    initialize = function(`close`, `high`, `low`, `open`, `volume`, `time`){
       if (!missing(`close`)) {
         stopifnot(is.numeric(`close`), length(`close`) == 1)
         self$`close` <- `close`
@@ -49,10 +47,6 @@ Price <- R6::R6Class(
       if (!missing(`volume`)) {
         stopifnot(is.numeric(`volume`), length(`volume`) == 1)
         self$`volume` <- `volume`
-      }
-      if (!missing(`splitFactor`)) {
-        stopifnot(is.numeric(`splitFactor`), length(`splitFactor`) == 1)
-        self$`splitFactor` <- `splitFactor`
       }
       if (!missing(`time`)) {
         stopifnot(is.character(`time`), length(`time`) == 1)
@@ -75,9 +69,6 @@ Price <- R6::R6Class(
       }
       if (!is.null(self$`volume`)) {
         PriceObject[['volume']] <- self$`volume`
-      }
-      if (!is.null(self$`splitFactor`)) {
-        PriceObject[['splitFactor']] <- self$`splitFactor`
       }
       if (!is.null(self$`time`)) {
         PriceObject[['time']] <- self$`time`
@@ -102,9 +93,6 @@ Price <- R6::R6Class(
       if (!is.null(PriceObject$`volume`)) {
         self$`volume` <- PriceObject$`volume`
       }
-      if (!is.null(PriceObject$`splitFactor`)) {
-        self$`splitFactor` <- PriceObject$`splitFactor`
-      }
       if (!is.null(PriceObject$`time`)) {
         self$`time` <- PriceObject$`time`
       }
@@ -117,7 +105,6 @@ Price <- R6::R6Class(
            "low": %d,
            "open": %d,
            "volume": %d,
-           "splitFactor": %d,
            "time": %s
         }',
         self$`close`,
@@ -125,7 +112,6 @@ Price <- R6::R6Class(
         self$`low`,
         self$`open`,
         self$`volume`,
-        self$`splitFactor`,
         self$`time`
       )
     },
@@ -136,7 +122,6 @@ Price <- R6::R6Class(
       self$`low` <- PriceObject$`low`
       self$`open` <- PriceObject$`open`
       self$`volume` <- PriceObject$`volume`
-      self$`splitFactor` <- PriceObject$`splitFactor`
       self$`time` <- PriceObject$`time`
     }
   )
